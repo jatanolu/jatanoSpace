@@ -46,6 +46,25 @@
 			background-color: #f1f1f1;
 		}
 	</style>
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			document.querySelectorAll("th").forEach(th => {
+				th.addEventListener("click", () => sortTable(th.cellIndex));
+			});
+
+			function sortTable(colIndex) {
+				let table = document.querySelector("tbody");
+				let rows = Array.from(table.rows);
+				let isNumeric = !isNaN(rows[0].cells[colIndex].innerText);
+				rows.sort((a, b) => {
+					let aData = a.cells[colIndex].innerText;
+					let bData = b.cells[colIndex].innerText;
+					return isNumeric ? bData - aData : aData.localeCompare(bData);
+				});
+				rows.forEach(row => table.appendChild(row));
+			}
+		});
+	</script>
 
 </head>
 <nav>
